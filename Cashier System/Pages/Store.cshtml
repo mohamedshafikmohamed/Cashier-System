@@ -1,0 +1,57 @@
+﻿@page
+@model Cashier_System.Pages.StoreModel
+@{
+    ViewData["Title"] = "Store";
+}
+@*
+    @(Html.DevExtreme().DataGrid< DevExtreme.AspNet.Demos.Models.DataGrid.>()
+        .ID("gridContainer")
+        .ShowBorders(true)
+        .RtlEnabled(true)
+        .DataSource(d => d.Mvc()
+                .Controller("Store")
+                .LoadAction("Get")
+        )
+        .Columns(c => {
+
+            c.Add().DataField("كود المنتج ");
+            c.Add().DataField("اسم المنتج ");
+            c.Add().DataField("سعر الشراء  ");
+            c.Add().DataField("سغر البيع");
+            c.Add().DataField("صورة المنتج");
+            c.Add().DataField(" الكمية");
+        })
+    )
+*@
+@(Html.DevExtreme().DataGrid<Cashier_System.Models.Product>
+    ()
+    .DataSource(ds => ds.Mvc()
+    .Controller("Store")
+    .LoadAction("Get")
+    .UpdateAction("Updateproduct").
+    InsertAction("post").DeleteAction("Delete")
+    .Key("Id")
+    )
+    .RtlEnabled(true)
+    .RemoteOperations(true)
+    .Columns(columns => {
+
+    columns.AddFor(m => m.Id);
+
+    columns.AddFor(m => m.Name);
+
+    columns.AddFor(m => m.Quantity);
+
+    columns.AddFor(m => m.PurchasingPrice);
+
+    columns.AddFor(m => m.SellingPrice);
+
+
+    })
+    .Editing(e=>e.AllowAdding(true)
+
+    .AllowDeleting(true)
+    .AllowUpdating(true)
+    .UseIcons(true)
+    )
+    )
