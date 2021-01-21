@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
 using DevExtreme.AspNet.Mvc;
 using Cashier_System.Models;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace Cashier_System.Controllers
 {
@@ -69,7 +71,7 @@ namespace Cashier_System.Controllers
         }
         public void Upload_photo(IFormFile photo)
         {
-            string p = Path.Combine(_Ihosting.WebRootPath, "images");
+            string p = Path.Combine(Ihosting.WebRootPath, "images");
             string p2 = Path.Combine(p, photo.FileName);
             photo.CopyTo(new FileStream(p2, FileMode.Create));
 
