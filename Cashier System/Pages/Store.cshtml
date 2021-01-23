@@ -32,61 +32,62 @@
     )
 *@
 @(Html.DevExtreme().DataGrid<Cashier_System.Models.Product>
-    ()
-    .DataSource(ds => ds.Mvc()
-    .Controller("Store")
-    .LoadAction("Get")
+        ()
+        .DataSource(ds => ds.Mvc()
+        .Controller("Store")
+        .LoadAction("Get")
 
-    .UpdateAction("Updateproduct").
-    InsertAction("post").DeleteAction("Delete")
-    .Key("Id")
-    )
-    .Export(e => e.Enabled(true))
-    .ShowBorders(true)
-    .OnExporting("exporting")
-    .SearchPanel(s => s
-    .Visible(true)
-    .Placeholder("اكتب لنبدء البحث ")
-    .Width(300)
-    .HighlightCaseSensitive(true)
-    )
-    .RtlEnabled(true)
-    .RemoteOperations(true)
-    .Columns(columns => {
+        .UpdateAction("Updateproduct").
+        InsertAction("post").DeleteAction("Delete")
+        .Key("Id")
+        )
+        .Export(e => e.Enabled(true))
+        .ShowBorders(true)
+        .OnExporting("exporting")
+        .SearchPanel(s => s
+        .Visible(true)
+        .Placeholder("اكتب لنبدء البحث ")
+        .Width(300)
+        .HighlightCaseSensitive(true)
+        )
+        .RtlEnabled(true)
+        .RemoteOperations(true)
+        .Columns(columns => {
 
-        columns.AddFor(m => m.Id);
+            columns.AddFor(m => m.Id);
 
-        columns.AddFor(m => m.Name);
+            columns.AddFor(m => m.Name);
 
-        columns.AddFor(m => m.Quantity);
+            columns.AddFor(m => m.Quantity);
 
-        columns.AddFor(m => m.PurchasingPrice);
+            columns.AddFor(m => m.PurchasingPrice);
 
-        columns.AddFor(m => m.SellingPrice);
-         columns.AddFor(m => m.photo)
-        
-            .Width(150)
-            .AllowFixing(true)
-            .AllowResizing(true)            
-            .AllowFiltering(false)
-            .AllowSorting(false)
-            .CellTemplate(@<text >
+            columns.AddFor(m => m.SellingPrice);
+            columns.AddFor(m => m.photo)
+
+           .Width(150)
+           .AllowFixing(true)
+           .AllowResizing(true)
+           .AllowFiltering(false)
+           .AllowSorting(false)
+           .CellTemplate(@<text >
                 <div style="height:80px;">
                     <img src="~/images/c3pc.jpg" alt=""/>
                 </div>
             </text>);
 
 
-    })
-    .Editing(e =>
+        })
+        .Editing(e => 
     {
         e.Mode(GridEditMode.Form);
+        e.AllowAdding(true);
         e.AllowUpdating(true);
         e.AllowDeleting(true);
 
 
 
-   e.UseIcons(true);
+        e.UseIcons(true);
     }
     
 
