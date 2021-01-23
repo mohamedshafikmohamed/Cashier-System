@@ -1,0 +1,61 @@
+﻿@page
+@model Cashier_System.Pages.BillsModel
+<style>
+    #container {
+        padding: 10px;
+    }
+
+        #container ul {
+            list-style-type: none;
+            text-align: center;
+            font-size: 0;
+        }
+
+            #container ul li {
+                display: inline-block;
+                width: 160px;
+                margin: 10px;
+                font-size: 14px;
+            }
+
+                #container ul li img {
+                    width: 100px;
+                }
+
+    .button-info {
+        margin: 10px;
+    }
+
+    .dx-popup-content p {
+        margin-bottom: 10px;
+        margin-top: 0;
+    }
+</style>
+
+<div id="container">
+
+ 
+
+
+  
+    <ul class="employees">
+        @foreach (var p in Model.products)
+        {
+            <li>
+                <img src="~/images/@p.photo" width="80" height="80" style="border-radius:20%; " /><br />
+                <i>@p.Name</i>
+                <i>@p.SellingPrice</i><br />
+
+              <form asp-action="bill" asp-controller="bills" asp-route-code="@p.Id" >
+
+                  <button type="submit" class="btn btn-success" style="width:85px; height:40px;">Add</button>
+              </form>
+
+          
+        </li>
+        }
+           
+
+        }
+        </ul>
+</div>

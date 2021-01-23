@@ -11,8 +11,10 @@ namespace Cashier_System.Models
     {
        [Display(Name = "كود المنتج ")]
         public string Id { get; set; }
-      
-         [Display(Name = "اسم المنتج ")]
+        [Display(Name = "صورة المنتج ")]
+        public string photo { get; set; }
+        [Display(Name = "اسم المنتج ")]
+
         public string Name { get; set; }
         [Display(Name = " الكمية ")]
         public int Quantity { get; set; }

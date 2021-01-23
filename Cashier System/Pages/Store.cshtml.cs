@@ -23,6 +23,7 @@ namespace Cashier_System.Pages
 
         public async Task OnGetAsync()
         {
+          
             Product = await _context.Store.ToListAsync();
         }
     }

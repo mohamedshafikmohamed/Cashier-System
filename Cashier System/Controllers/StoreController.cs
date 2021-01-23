@@ -16,6 +16,7 @@ using DevExtreme.AspNet.Mvc;
 using Cashier_System.Models;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Microsoft.AspNetCore.Identity;
 
 namespace Cashier_System.Controllers
 {
@@ -24,11 +25,12 @@ namespace Cashier_System.Controllers
     {
         public ApplicationDbContext DbContext;
         private readonly IWebHostEnvironment Ihosting;
-
-        public StoreController(ApplicationDbContext _DbContext, IWebHostEnvironment _Ihosting)
+        
+        public StoreController(ApplicationDbContext _DbContext, IWebHostEnvironment _Ihosting, RoleManager<IdentityRole> _rolemanager)
         {
             DbContext = _DbContext;
             Ihosting = _Ihosting;
+           
         }
         [HttpGet]
         public Object Get(DataSourceLoadOptions loadOptions)
@@ -37,14 +39,14 @@ namespace Cashier_System.Controllers
          
         }
            [HttpPost]
-        public IActionResult Post(string values)
+        public IActionResult Post(string values,IFormFile img)
         {
-            var newEmployee = new Product();
-            JsonConvert.PopulateObject(values, newEmployee);
+            var product = new Product();
+            JsonConvert.PopulateObject(values, product);
+            Upload_photo(img, product.Id);
 
-
-
-            DbContext.Store.Add(newEmployee);
+            product.photo = product.Id + img.FileName;
+            DbContext.Store.Add(product);
             DbContext.SaveChanges();
 
             return Ok();
@@ -69,10 +71,12 @@ namespace Cashier_System.Controllers
             DbContext.Store.Remove(p);
             DbContext.SaveChanges();
         }
-        public void Upload_photo(IFormFile photo)
+    
+     
+        public void Upload_photo(IFormFile photo,string code)
         {
             string p = Path.Combine(Ihosting.WebRootPath, "images");
-            string p2 = Path.Combine(p, photo.FileName);
+            string p2 = Path.Combine(p, photo.FileName+code);
             photo.CopyTo(new FileStream(p2, FileMode.Create));
 
         }
