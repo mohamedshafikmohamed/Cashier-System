@@ -34,10 +34,16 @@ namespace Cashier_System.Controllers
         {
             return View();
         }
-     /*   public ActionResult bill(string code)
+     /*  public ActionResult bill(string code)
         {
             product_in_bills.Add(code);
             return RedirectToPage("store");
         }*/
+     [HttpPost]
+        public ActionResult Create_bill(List<int>codes)
+        {
+            //product_in_bills.Add(code);
+            return RedirectToPage("store");
+        }
     }
 }

@@ -43,7 +43,7 @@ namespace Cashier_System.Controllers
         {
             var product = new Product();
             JsonConvert.PopulateObject(values, product);
-            Upload_photo(img, product.Id);
+            Upload_photo(img, product.Id.ToString());
 
             product.photo = product.Id + img.FileName;
             DbContext.Store.Add(product);
@@ -53,26 +53,26 @@ namespace Cashier_System.Controllers
            
          
         }
-        [HttpPut]
-        public IActionResult Updateproduct(string key, string values)
-        {
-            var order = DbContext.Store.First(o => o.Id == key);
+         [HttpPut]
+         public IActionResult Updateproduct(int key, string values)
+          {
+             var order = DbContext.Store.First(o => o.Id == key);
             JsonConvert.PopulateObject(values, order);
 
-            
 
-            DbContext.SaveChanges();
 
-            return Ok(order);
-        }
-        public void Delete(string key)
+              DbContext.SaveChanges();
+
+              return Ok(order);
+          }
+        public void Delete(int key)
         {
             var p = DbContext.Store.First(a => a.Id == key);
             DbContext.Store.Remove(p);
             DbContext.SaveChanges();
         }
     
-     
+
         public void Upload_photo(IFormFile photo,string code)
         {
             string p = Path.Combine(Ihosting.WebRootPath, "images");
