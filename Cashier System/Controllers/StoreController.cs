@@ -71,7 +71,12 @@ namespace Cashier_System.Controllers
             DbContext.Store.Remove(p);
             DbContext.SaveChanges();
         }
-    
+        [HttpPost]
+        public IActionResult Index()
+        {
+
+            return Ok();
+        }
 
         public void Upload_photo(IFormFile photo,string code)
         {

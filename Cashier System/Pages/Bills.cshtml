@@ -1,74 +1,84 @@
 ﻿@page
 @model Cashier_System.Pages.BillsModel
-    <script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<script>
+
     var list = [];
 
-        function AddId(x) {
-            list.push(x);
+    function AddId(x) {
+        list.push(x);
+
+
+    }
+
+    function A(x) {
+        let input = document.querySelector("#d").value += x;
+       
+    }
+    
+
+
+</script>
+<style>
+    #container {
+        padding: 10px;
+    }
+
+        #container ul {
+            list-style-type: none;
+            text-align: center;
+            font-size: 0;
         }
 
-        function A() {
-            console.log(list);
-        }
-    </script>
-    <style>
-        #container {
-            padding: 10px;
-        }
-
-            #container ul {
-                list-style-type: none;
-                text-align: center;
-                font-size: 0;
+            #container ul li {
+                display: inline-block;
+                width: 160px;
+                margin: 10px;
+                font-size: 14px;
             }
 
-                #container ul li {
-                    display: inline-block;
-                    width: 160px;
-                    margin: 10px;
-                    font-size: 14px;
+                #container ul li img {
+                    width: 100px;
                 }
 
-                    #container ul li img {
-                        width: 100px;
-                    }
+    .button-info {
+        margin: 10px;
+    }
 
-        .button-info {
-            margin: 10px;
-        }
-
-        .dx-popup-content p {
-            margin-bottom: 10px;
-            margin-top: 0;
-        }
-    </style>
-
+    .dx-popup-content p {
+        margin-bottom: 10px;
+        margin-top: 0;
+    }
+</style>
     <div id="container">
-
-
-
-
-
         <ul class="employees">
             @foreach (var p in Model.products)
             {
-            <li>
-                <img src="~/images/@p.photo" width="80" height="80" style="border-radius:20%; " /><br />
-                <i>@p.Name</i>
-                <i>@p.SellingPrice</i><br />
+                <li>
+                    <img src="~/images/@p.photo" width="80" height="80" style="border-radius:20%; " /><br />
+                    <i>@p.Name</i>
+                    <i>@p.SellingPrice</i><br />
 
-                @{
-                  
-                    <button type="submit" onclick="AddId(@p.Id);" class="btn btn-success" style="width:85px; height:40px;">Add</button>
+                    @{
 
-                }
+                        <button type="submit" onclick="A(@p.Id.ToString()+' ');" class="btn btn-success" style="width:85px; height:40px;">Add</button>
 
-            </li>
-                       }
+                    }
+
+                </li>
+            }
 
 
             }
         </ul>
-        <button   onclick="A();" class="btn btn-success" style="width:85px; height:40px;" >Id</button>
+
     </div>
-<div style="padding-left:-20px; background-color:greenyellow; width:150px; height:400px;"></div>
+
+
+    <form method="post" asp-page="">
+        <input type="hidden" asp-for="codes" value="" id="d"/>
+
+        <input type="submit" />
+
+    </form>

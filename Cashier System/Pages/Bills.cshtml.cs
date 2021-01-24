@@ -15,6 +15,8 @@ namespace Cashier_System.Pages
         public ApplicationDbContext DbContext;
        
         public List<Product> products { get; set; }
+        [BindProperty]
+        public  string codes { get; set; }
 
         public BillsModel(  ApplicationDbContext _DbContext)
         {
@@ -23,8 +25,15 @@ namespace Cashier_System.Pages
 
         public async Task OnGet()
         {
+            
             products =await DbContext.Store.ToListAsync();
         }
-      
+        public async Task<IActionResult> OnPostAsync()
+        {
+            await DbContext.SaveChangesAsync();
+            codes += "4";
+            return Page();
+        }
+
     }
 }
