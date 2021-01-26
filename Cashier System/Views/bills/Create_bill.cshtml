@@ -1,0 +1,108 @@
+﻿
+@model Cashier_System.Models.BillsViewModel
+
+<script>
+
+   function dd(x) {
+        $.ajax(
+            {
+                type: "POST",
+                url: "/bills/Addproducttobill",
+                data: { code: x },
+                datatype:"json",
+               
+            }
+
+        )
+       $("#div1").load("/Bills/GetPartial");
+    };
+
+
+
+
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script>
+    var x = 5;
+
+
+
+    $(document).ready(function () {
+
+        $(".b").click(function refresh() {
+            $("#div1").load("/Bills/GetPartial");
+        });
+
+    });
+</script>
+<style>
+    #container {
+        padding: 10px;
+    }
+
+        #container ul {
+            list-style-type: none;
+            text-align: center;
+            font-size: 0;
+        }
+
+            #container ul li {
+                display: inline-block;
+                width: 160px;
+                margin: 10px;
+                font-size: 14px;
+            }
+
+                #container ul li img {
+                    width: 100px;
+                }
+
+    .button-info {
+        margin: 10px;
+    }
+
+    .dx-popup-content p {
+        margin-bottom: 10px;
+        margin-top: 0;
+    }
+</style>
+<button class="b">load partialview</button>
+<div class="container" id="div1">
+
+</div>
+<div id="container">
+    <ul class="employees">
+
+
+        
+        @foreach (var p in Model.AllProduct)
+        {
+            <li>
+                <img src="~/images/@p.photo" width="80" height="80" style="border-radius:20%; " /><br />
+                <i>@p.Name</i>
+                <i>@p.SellingPrice</i><br />
+
+
+
+              
+
+                    <button onclick="dd(@p.Id)">add</button>
+                
+
+
+
+
+            </li>
+        
+
+
+
+
+        }
+    </ul>
+    
+</div>

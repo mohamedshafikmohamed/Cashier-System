@@ -1,0 +1,35 @@
+﻿
+
+@model IEnumerable<Cashier_System.Models.Product>
+<div id="container">
+    <ul class="employees">
+
+
+        {
+        @foreach (var p in Model)
+        {
+            <li>
+                <img src="~/images/@p.photo" width="80" height="80" style="border-radius:20%; " /><br />
+                <i>@p.Name</i>
+                <i>@p.SellingPrice</i><br />
+
+
+
+                <form>
+
+                    <button type="submit" asp-route-productid="@p.Id.ToString()"></button>
+                </form>
+
+
+
+
+            </li>
+        }
+
+
+
+
+        }
+    </ul>
+    }
+</div>

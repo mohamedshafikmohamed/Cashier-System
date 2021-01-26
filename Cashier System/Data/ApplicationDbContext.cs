@@ -15,5 +15,7 @@ namespace Cashier_System.Data
         }
         public DbSet<Product> Store { get; set; }
         public DbSet<Bills> Bills { get; set; }
+        public DbSet<ProductBills> ProductBills { get; set; }
+        
     }
 }

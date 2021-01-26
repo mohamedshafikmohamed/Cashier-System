@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Cashier_System.Models
 {
-    public class Product
+    public class Productviewmode
     {
-       [Display(Name = "كود المنتج ")]
+        [Display(Name = "كود المنتج ")]
 
-        
+
         public int Id { get; set; }
         [Display(Name = "صورة المنتج ")]
-        public string photo { get; set; }
+        public IFormFile photo { get; set; }
         [Display(Name = "اسم المنتج ")]
 
         public string Name { get; set; }

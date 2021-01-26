@@ -20,6 +20,10 @@ namespace Cashier_System.Models
 
         [Display(Name = " المدفوع")]
         public float cost { get; set; }
+        [Display(Name = " الخصم")]
+        public float Discount { get; set; }
+        [Display(Name = " المحاسب")]
+        public string user  { get; set; }
 
     }
 }

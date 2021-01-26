@@ -14,9 +14,9 @@
 
     function A(x) {
         let input = document.querySelector("#d").value += x;
-       
+
     }
-    
+
 
 
 </script>
@@ -51,34 +51,65 @@
         margin-top: 0;
     }
 </style>
-    <div id="container">
-        <ul class="employees">
-            @foreach (var p in Model.products)
+<div id="container">
+    <ul class="employees">
+
+        @{if (Model.products != null)
             {
-                <li>
-                    <img src="~/images/@p.photo" width="80" height="80" style="border-radius:20%; " /><br />
-                    <i>@p.Name</i>
-                    <i>@p.SellingPrice</i><br />
-
-                    @{
-
-                        <button type="submit" onclick="A(@p.Id.ToString()+' ');" class="btn btn-success" style="width:85px; height:40px;">Add</button>
-
-                    }
-
-                </li>
-            }
+                @foreach (var p in Model.products)
+                {
+                    <li>
+                        <img src="~/images/@p.photo" width="80" height="80" style="border-radius:20%; " /><br />
+                        <i>@p.Name</i>
+                        <i>@p.SellingPrice</i><br />
 
 
-            }
-        </ul>
+                        @{
+                            <form method="post" asp-controller="bills" asp-action="Create_bill"  asp-route-code="@p.Id.ToString()">
 
-    </div>
+                                <input type="submit" />
+                            </form>
 
 
-    <form method="post" asp-page="">
-        <input type="hidden" asp-for="codes" value="" id="d"/>
+                        }
 
-        <input type="submit" />
+                    </li>
+                            }
 
-    </form>
+
+                            }
+
+        }
+    </ul>
+  }
+</div>
+<div  style="height:600px; padding-right:-20px;  background-color:aqua;  ">
+    <ul class="employees">
+        @{if (Model.products != null)
+            {
+                @foreach (var p in Model.Billsproducts)
+                {
+                    <li>
+                        <img src="~/images/@p.photo" width="80" height="80" style="border-radius:20%; " /><br />
+                        <i>@p.Name</i>
+                        <i>@p.SellingPrice</i><br />
+
+
+
+
+                    </li>
+                }
+
+
+            } }
+    </ul>
+                
+
+</div>
+
+<form method="post" asp-pa>
+    <input type="hidden" value="" id="d" />
+
+    <input type="submit" />
+
+</form>

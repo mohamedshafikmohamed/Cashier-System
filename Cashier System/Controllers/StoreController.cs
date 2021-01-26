@@ -39,13 +39,15 @@ namespace Cashier_System.Controllers
          
         }
            [HttpPost]
-        public IActionResult Post(string values,IFormFile img)
+        public IActionResult Post(string values)
         {
             var product = new Product();
             JsonConvert.PopulateObject(values, product);
-            Upload_photo(img, product.Id.ToString());
-
-            product.photo = product.Id + img.FileName;
+            //Upload_photo(img, product.Id.ToString());
+          /*  product.photo = " ";
+            
+            product.Gain = product.SellingPrice-product.PurchasingPrice;*/
+        //    product.photo = product.Id + img.FileName;
             DbContext.Store.Add(product);
             DbContext.SaveChanges();
 

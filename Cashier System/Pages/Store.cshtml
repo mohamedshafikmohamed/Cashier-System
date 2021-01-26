@@ -78,18 +78,23 @@
 
 
         })
-        .Editing(e => 
-    {
-        e.Mode(GridEditMode.Form);
-        e.AllowAdding(true);
-        e.AllowUpdating(true);
-        e.AllowDeleting(true);
+        .Editing(e =>
+        {
+            e.Mode(GridEditMode.Popup).Popup(p => p
+                     .Title("Product")
+                     .ShowTitle(true)
+                     .Width(700)
+                     .Height(310)
+                     );
+            e.AllowAdding(true);
+            e.AllowUpdating(true);
+            e.AllowDeleting(true);
 
 
 
-        e.UseIcons(true);
-    }
-    
+            e.UseIcons(true);
+        }
+
 
     )
     )
