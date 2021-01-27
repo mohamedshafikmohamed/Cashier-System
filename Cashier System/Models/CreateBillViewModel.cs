@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Cashier_System.Models
 {
-    public class BillsViewModel
+    public class CreateBillViewModel
     {
         public IEnumerable<Product> AllProduct { get; set; }
         public IEnumerable<Product> BillsProduct { get; set; }

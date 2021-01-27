@@ -13,17 +13,19 @@ namespace Cashier_System.Models
         //  public virtual IdentityUser  { get; set; }
         [Display(Name = "كود الفاتورة ")]
         public int Id { get; set; }
-        
-
-        public string products_names { get; set; }
-
-
+        public string products_ids { get; set; }
         [Display(Name = " المدفوع")]
         public float cost { get; set; }
         [Display(Name = " الخصم")]
         public float Discount { get; set; }
         [Display(Name = " المحاسب")]
         public string user  { get; set; }
+        [Display(Name = " الضرائب")]
+        public string Taxes  { get; set; }
+        [Display(Name = " موعد خروج الفاتورة")]
+        public string date  { get; set; }
+
+      
 
     }
 }

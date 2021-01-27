@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Cashier_System.Data;
 using Cashier_System.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Cashier_System.Pages
 {
@@ -20,7 +21,7 @@ namespace Cashier_System.Pages
         }
 
         public IList<Product> Product { get;set; }
-
+        
         public async Task OnGetAsync()
         {
           

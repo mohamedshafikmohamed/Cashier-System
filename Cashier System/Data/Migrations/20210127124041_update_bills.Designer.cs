@@ -4,14 +4,16 @@ using Cashier_System.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cashier_System.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210127124041_update_bills")]
+    partial class update_bills
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,14 +31,8 @@ namespace Cashier_System.Data.Migrations
                     b.Property<float>("Discount")
                         .HasColumnType("real");
 
-                    b.Property<string>("Taxes")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<float>("cost")
                         .HasColumnType("real");
-
-                    b.Property<string>("date")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("products_ids")
                         .HasColumnType("nvarchar(max)");

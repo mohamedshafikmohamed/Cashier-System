@@ -1,0 +1,80 @@
+﻿@model Cashier_System.Models.BillViewModel
+@{
+    Layout = "_DevExtremeLayout";
+}
+@{
+    ViewData["Title"] = "bill";
+}
+
+@using Microsoft.AspNetCore.Identity
+@using Cashier_System
+@using Cashier_System.Data
+@namespace Cashier_System.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using DevExtreme.AspNet.Mvc
+<h1>bill</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.products[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.products[0].SellingPrice)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.products)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SellingPrice)
+                </td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <h4>Bills</h4>
+    <hr />
+    <dl class="row">
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.bill.cost)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.bill.cost)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.bill.Discount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.bill.Discount)%
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.bill.user)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.bill.user)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.bill.date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.bill.date)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.bill.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
