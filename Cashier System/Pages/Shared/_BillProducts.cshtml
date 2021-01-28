@@ -1,11 +1,27 @@
-﻿
+﻿<script>
+
+    function d(x) {
+       
+        $.ajax(
+            {
+                type: "POST",
+                url: "/bills/Deleteproductfrombill",
+                data: { id: x },
+                datatype: "json",
+
+            }
+
+        )
+        $("#div1").load("/Bills/GetPartial");
+    };
+
+</script>
 
 @model IEnumerable<Cashier_System.Models.Product>
 <div id="container">
     <ul class="employees">
 
-
-        {
+       
         @foreach (var p in Model)
         {
             <li>
@@ -13,23 +29,14 @@
                 <i>@p.Name</i>
                 <i>@p.SellingPrice</i><br />
 
-
-
-                <form>
-
-                    <button type="submit" asp-route-productid="@p.Id.ToString()"></button>
-                </form>
-
-
-
-
+                <button class="btn btn-danger" onclick="d(@p.Id)">delete</button>
             </li>
-        }
+           }
 
 
 
 
-        }
+        
     </ul>
     
 </div>

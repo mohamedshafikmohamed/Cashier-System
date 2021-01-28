@@ -11,7 +11,7 @@
 }
 <script>
 
-    function dd(x) {
+    function a(x) {
         $.ajax(
             {
                 type: "POST",
@@ -24,6 +24,8 @@
         )
         $("#div1").load("/Bills/GetPartial");
     };
+
+
 </script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -88,28 +90,17 @@
                 <img src="~/images/@p.photo" width="80" height="80" style="border-radius:20%; " /><br />
                 <i>@p.Name</i>
                 <i>@p.SellingPrice</i><br />
-
-
-
-
-
-                <button onclick="dd(@p.Id)">add</button>
-
-
-
-
+                <button class="btn btn-success" onclick="a(@p.Id)">add</button>
+                
 
             </li>
-
-
-
-
 
         }
     </ul>
     <form asp-action="Create_bill" method="post" >
 
-        <label>Add Discount</label><input  name="Discount" value="0" />
+        <label>Add Discount</label><input  name="Discount" value="0" /> 
+        <label>Add Taxes</label><input  name="Taxes" value="0" />
         <input type="submit" value="CheckOut" />
     </form>
 </div>

@@ -7,7 +7,8 @@ namespace Cashier_System.Models
 {
     public class BillViewModel
     {
-        public List<Product> products { get; set; }
+        public Dictionary<string, int> products { get; set; }
+        public Dictionary<string, float> Total { get; set; }
         public Bills bill { get; set; }
     }
 }

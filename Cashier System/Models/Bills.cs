@@ -21,7 +21,7 @@ namespace Cashier_System.Models
         [Display(Name = " المحاسب")]
         public string user  { get; set; }
         [Display(Name = " الضرائب")]
-        public string Taxes  { get; set; }
+        public float Taxes  { get; set; }
         [Display(Name = " موعد خروج الفاتورة")]
         public string date  { get; set; }
 
