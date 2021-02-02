@@ -9,25 +9,7 @@
 @{
     Layout = "_Layout";
 }
-<script>
-
-    function a(x) {
-        $.ajax(
-            {
-                type: "POST",
-                url: "/bills/Addproducttobill",
-                data: { code: x },
-                datatype: "json",
-
-            }
-
-        )
-        $("#div1").load("/Bills/GetPartial");
-    };
-
-
-</script>
-
+<script src="~/js/AjaxMethods.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
@@ -75,32 +57,44 @@
         margin-top: 0;
     }
 </style>
-<button class="b">load partialview</button>
-<div class="container" id="div1">
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
-</div>
-<div id="container">
-    <ul class="employees">
-
-
-
-        @foreach (var p in Model.AllProduct)
+    @{ if (SignInManager.IsSignedIn(User))
         {
-            <li>
-                <img src="~/images/@p.photo" width="80" height="80" style="border-radius:20%; " /><br />
-                <i>@p.Name</i>
-                <i>@p.SellingPrice</i><br />
-                <button class="btn btn-success" onclick="a(@p.Id)">add</button>
-                
+        <button class="b">load partialview</button>
+    <div class="container" id="div1">
 
-            </li>
+    </div>
+    <div id="container">
+        <ul class="employees">
 
-        }
-    </ul>
-    <form asp-action="Create_bill" method="post" >
 
-        <label>Add Discount</label><input  name="Discount" value="0" /> 
-        <label>Add Taxes</label><input  name="Taxes" value="0" />
-        <input type="submit" value="CheckOut" />
-    </form>
-</div>
+
+            @foreach (var p in Model.AllProduct)
+            {
+                <li>
+                    <img src="~/images/@p.photo" width="80" height="80" style="border-radius:20%; " /><br />
+                    <i>@p.Name</i>
+                    <i>@p.SellingPrice</i><br />
+                    <button class="btn btn-success" onclick="a(@p.Id)">add</button>
+
+
+                </li>
+
+            }
+        </ul>
+        <form asp-action="Create_bill" method="post">
+
+            <label>Add Discount</label><input name="Discount" value="0" />
+            <label>Add Taxes</label><input name="Taxes" value="0" />
+            <input type="submit" value="CheckOut" />
+        </form>
+    </div>
+                }
+            
+    else{
+
+<h1>YOU MUST LOGIN FIRST</h1>
+        } }

@@ -17,6 +17,7 @@ using Cashier_System.Models;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Cors;
 
 namespace Cashier_System.Controllers
 {
@@ -39,15 +40,15 @@ namespace Cashier_System.Controllers
          
         }
            [HttpPost]
-        public IActionResult Post(string values)
+        
+        public IActionResult Post(string values,IFormFile Photo)
         {
+            
             var product = new Product();
             JsonConvert.PopulateObject(values, product);
-            //Upload_photo(img, product.Id.ToString());
-          /*  product.photo = " ";
-            
-            product.Gain = product.SellingPrice-product.PurchasingPrice;*/
-        //    product.photo = product.Id + img.FileName;
+            var myFile = Request.Form.Files["Photo"];
+            product.Gain = (product.SellingPrice - product.PurchasingPrice) * product.Quantity;
+            product.Id = null;
             DbContext.Store.Add(product);
             DbContext.SaveChanges();
 

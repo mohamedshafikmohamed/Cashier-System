@@ -1,0 +1,81 @@
+﻿@model Cashier_System.Models.EditBillViewModel
+@{
+    Layout = "_DevExtremeLayout";
+}
+@using Microsoft.AspNetCore.Identity
+@using Cashier_System
+@using Cashier_System.Data
+@namespace Cashier_System.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using DevExtreme.AspNet.Mvc
+<script src="~/js/AjaxMethods.js"></script>
+<script>
+
+    f = () => {
+        // alert( $("#dic")[i].val())
+        var ids = "";
+        let model = document.querySelectorAll("#dic");
+        for (let i = 0; i <= model.length; i++) {
+
+            ids += model[i].value;
+        }
+        console.log(ids);
+    };
+</script>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit_bill">
+            @{int i = 0;
+                foreach(var p in Model.products)
+                {
+                        <div class="form-group">
+                            <input type="hidden" asp-for="@Model.products[i].name" value="@Model.products[i].name" class="form-control" id="dic" />
+                            <input type="hidden" asp-for="@Model.products_ids[i]" value="@Model.products_ids[i]" class="form-control" id="dic" />
+                            <label asp-for="@Model.products[i].name" class="control-label">@p.name</label>
+                            <input asp-for="@Model.products[i].Quantity" class="form-control" id="dic" />
+                            <span asp-validation-for="@Model.products[i]" class="text-danger"></span>
+                        </div>
+                    i++;
+                }
+            }
+
+            @*
+
+                hidden inputs
+
+
+            *@
+            <input type="hidden" asp-for="@Model.bill.Id" class="form-control" />
+
+
+            <input type="hidden" asp-for="@Model.bill.user" class="form-control" />
+            <input type="hidden" asp-for="@Model.bill.products_ids" class="form-control" />
+            <input type="hidden" asp-for="@Model.bill.date" class="form-control" />
+
+            @*
+
+                hidden inputs
+
+
+            *@
+            <div class="form-group">
+                <label asp-for="@Model.bill.Discount" class="control-label"></label>
+                <input asp-for="@Model.bill.Discount" class="form-control" />
+                <span asp-validation-for="@Model.bill.Discount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.bill.Taxes" class="control-label"></label>
+                <input asp-for="@Model.bill.Taxes" class="form-control" />
+                <span asp-validation-for="@Model.bill.Taxes" class="text-danger"></span>
+            </div>
+
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<button onclick="f()">ffffffffffffffffffffffffff</button>

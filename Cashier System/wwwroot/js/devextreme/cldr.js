@@ -12,6 +12,7 @@
  * CLDR JavaScript Library v0.5.1 2019-01-21T13:43Z MIT license © Rafael Xavier
  * http://git.io/h4lmVg
  */
+
 (function( root, factory ) {
 
 	if ( typeof define === "function" && define.amd ) {

@@ -24,8 +24,9 @@ namespace Cashier_System.Models
         public float Taxes  { get; set; }
         [Display(Name = " موعد خروج الفاتورة")]
         public string date  { get; set; }
+        public bool IsDeleted { get; set; }
 
-      
+
 
     }
 }

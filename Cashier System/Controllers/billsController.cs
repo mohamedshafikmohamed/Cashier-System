@@ -49,23 +49,6 @@ namespace Cashier_System.Controllers
            string email = User.Identity.Name;
            var x= DbContext.Bills.Where(x => x.user==email).ToList();
             return View(x);
-        } 
-        [HttpGet]
-        public ActionResult Accountants()
-        {
-            List<Users> u = new List<Users>();
-            
-           var x= DbContext.Users.ToList();
-            foreach(var z in x)
-            {
-                Users u1 = new Users();
-                u1.Email = z.Email;
-                u1.Id = z.Id;
-                u1.PasswordHash = z.PasswordHash;
-                u.Add(u1);
-
-            }
-            return View(u);
         }
 
         [HttpGet]
@@ -76,9 +59,11 @@ namespace Cashier_System.Controllers
             model.products=new Dictionary<string, int>();
             model.Total=new Dictionary<string, float>();
             
-            List<string> products = new List<string>();
+          //  List<string> products = new List<string>();
             model.bill= DbContext.Bills.Where(x => x.Id == Bill_Id).FirstOrDefault();
             string[] ids = model.bill.products_ids.Split(' ');
+
+
             foreach (var p in ids) {
                 if (p == "") continue;
                 Product  product = (DbContext.Store.Where(x => x.Id == Convert.ToInt32(p)).FirstOrDefault());
@@ -102,7 +87,7 @@ namespace Cashier_System.Controllers
         }
         [HttpGet]
 
-        public ActionResult Create_bill(/*List<int>codes*/)
+        public ActionResult Create_bill()
         {
            
             CreateBillViewModel model=new CreateBillViewModel();
@@ -112,8 +97,8 @@ namespace Cashier_System.Controllers
             GetPartial();
             return View(model);
         }
-      
-       
+
+        
         [HttpPost]
         public ActionResult Create_bill(string Discount,string Taxes)
         {
@@ -136,13 +121,14 @@ namespace Cashier_System.Controllers
                 totalcost += p1.SellingPrice;
             }
             float z = 100;
+            float tt = totalcost;
             float y = Convert.ToInt32(Discount);
             float t = (y/z);
             float m= (totalcost * t);
             totalcost -= m;
             y= Convert.ToInt32(Taxes);
             t = y / z;
-            m = (totalcost * t);
+            m = (tt * t);
             pb.products_ids = products_id;
             totalcost += m;
             pb.cost = totalcost;
@@ -151,7 +137,131 @@ namespace Cashier_System.Controllers
             DbContext.Bills.Update(pb);
             DbContext.SaveChanges();
             return RedirectToAction("Bill", new { Bill_Id = pb.Id });
-        }  
+        }
+
+        
+        [HttpGet]
+        public ActionResult Edit_bill(int id)
+        {
+            EditBillViewModel model = new EditBillViewModel();
+            model.products = new List<Product_quantity>();
+            Dictionary<string, int> m = new Dictionary<string, int>();
+            List<int> l = new List<int>();
+
+            model.bill = DbContext.Bills.Where(x => x.Id == id).FirstOrDefault();
+            string[] ids = model.bill.products_ids.Split(' ');
+            foreach (var p in ids)
+            {
+                if (p == "") continue;
+                Product product = (DbContext.Store.Where(x => x.Id == Convert.ToInt32(p)).FirstOrDefault());
+                string name = product.Name;
+                if (m.ContainsKey(name)) { m[name] += 1;  }
+                else { m[name] = 1; l.Add((int)product.Id); }
+
+            }
+            int i = -1;
+            foreach(var x in m)
+            {
+                i++;
+
+                Product_quantity product_q = new Product_quantity();
+                product_q.Id = l[i];
+                product_q.name = x.Key;
+                product_q.Quantity = x.Value;
+                model.products.Add(product_q);
+            }
+            model.products_ids = l;
+
+
+            return View(model);
+        }
+        
+
+        [HttpPost]
+        public ActionResult Edit_bill(EditBillViewModel model)
+        {
+          //  var b = DbContext.ProductBills.Where(x => x.code == _UserManager.GetUserId(HttpContext.User) && x.code == "").ToList();
+            string ids = "";
+            float totalcost = 0;
+            int id = model.products_ids[0];
+            Bills bill = new Bills();
+            bill.date = model.bill.date;
+            bill.Discount = model.bill.Discount;
+            bill.Taxes = model.bill.Taxes;
+            bill.Id = model.bill.Id;
+            bill.user = model.bill.user;
+           
+          
+           // bill.cost = totalcost;
+            bill.date = DateTime.UtcNow.ToString();
+            bill.Taxes = Convert.ToInt32(model.bill.Taxes);
+            string UserId = DbContext.ProductBills.Where(u => u.ProductCode == id).FirstOrDefault().UserId;
+            var removed_product = DbContext.ProductBills.Where(u => u.code == bill.Id.ToString()).ToList();
+            foreach (var p in removed_product)
+            {
+                DbContext.ProductBills.Remove(p);
+            }
+            DbContext.SaveChanges();
+            int j = 0;
+            
+            foreach (var p in model.products_ids)
+            {
+                
+                for(int i=0;i<model.products[j].Quantity;i++)
+                {
+                    ids += p + " ";
+                    ProductBills pr = new ProductBills();
+                    pr.code = model.bill.Id.ToString();
+                    pr.UserId = UserId;
+                    pr.ProductCode = p;
+                    DbContext.ProductBills.Add(pr);
+                }
+                DbContext.SaveChanges();
+                j++;
+            }
+            bill.products_ids = ids;
+            string[] b = ids.Split(' ');
+            foreach (var p in b)
+            {
+                if (p == "") continue;
+
+
+                Product p1 = DbContext.Store.Where(x => x.Id.ToString() == p).ToList()[0];
+
+                totalcost += p1.SellingPrice;
+            }
+            float z = 100;
+            float tt = totalcost;
+           int y1 = (Convert.ToInt32(model.bill.Discount) );
+            float t = y1/ z;
+            float m = (totalcost * t);
+            totalcost -= m;
+            y1 = Convert.ToInt32(model.bill.Taxes);
+            t =y1 / z;
+            m = (tt * t);
+            totalcost += m;
+
+            bill.cost = totalcost;
+            DbContext.Bills.Update(bill);
+            DbContext.SaveChanges();
+            return RedirectToAction("Bill", new { Bill_Id = bill.Id });
+        }
+
+
+        [HttpPost]
+        public async Task<JsonResult> Delete_bill(int Id)
+        {
+            var products = DbContext.ProductBills.Where(x => x.code == Id.ToString()).ToList();
+            foreach (var x in products)
+            {
+                DbContext.ProductBills.Remove(x);
+            }
+            DbContext.Bills.Remove(DbContext.Bills.Where(z => z.Id == Id).FirstOrDefault());
+            string p = "";
+           await  DbContext.SaveChangesAsync();
+                return Json(p);
+        }
+
         [HttpPost]
         public async Task<JsonResult> Addproducttobill(string code)
         {
