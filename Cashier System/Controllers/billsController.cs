@@ -36,7 +36,8 @@ namespace Cashier_System.Controllers
               await rolemanager.CreateAsync(role);
 
               return RedirectToAction("index");
-          }*/
+          }
+        */
        
         public IActionResult Index()
         {
@@ -141,14 +142,14 @@ namespace Cashier_System.Controllers
 
         
         [HttpGet]
-        public ActionResult Edit_bill(int id)
+        public ActionResult Edit_bill(int Bill_Id)
         {
             EditBillViewModel model = new EditBillViewModel();
             model.products = new List<Product_quantity>();
             Dictionary<string, int> m = new Dictionary<string, int>();
             List<int> l = new List<int>();
 
-            model.bill = DbContext.Bills.Where(x => x.Id == id).FirstOrDefault();
+            model.bill = DbContext.Bills.Where(x => x.Id == Bill_Id).FirstOrDefault();
             string[] ids = model.bill.products_ids.Split(' ');
             foreach (var p in ids)
             {
