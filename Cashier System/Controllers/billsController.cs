@@ -103,14 +103,14 @@ namespace Cashier_System.Controllers
         [HttpPost]
         public ActionResult Create_bill(string Discount,string Taxes)
         {
+             Dictionary<int, int>d= new Dictionary<int, int>();
             var b = DbContext.ProductBills.Where(x => x.UserId == _UserManager.GetUserId(HttpContext.User) && x.code == "").ToList();
             string products_id = "";
             Bills pb = new Bills();
             pb.products_ids = products_id;
             pb.user = User.Identity.Name;
             pb.Discount = Convert.ToInt32(Discount);
-            DbContext.Bills.Add(pb);
-            DbContext.SaveChanges();
+           
             float totalcost = 0;
             foreach (var p in b)
             {
@@ -121,6 +121,32 @@ namespace Cashier_System.Controllers
                 products_id +=(p1.Id)+" ";
                 totalcost += p1.SellingPrice;
             }
+            string []ids = products_id.Split(' ');
+            foreach (var p in ids)
+            {
+                if (p == "") continue;
+                Product product = (DbContext.Store.Where(x => x.Id == Convert.ToInt32(p)).FirstOrDefault());
+                int id = (int)product.Id;
+
+                if (d.ContainsKey(Convert.ToInt32(id))) { d[Convert.ToInt32(id)] += 1; }
+                else { d[Convert.ToInt32(id)] = 1;}
+
+            }
+            Product product1;
+            foreach (var p in d)
+            {
+                product1 = DbContext.Store.Where(x => x.Id == p.Key).FirstOrDefault();
+            if (product1.Quantity-p.Value<0)
+                {
+                    ViewBag.QuantityError = "No Enough Quantity";
+                    return RedirectToAction("Create_bill");
+                }
+                product1.Quantity -= p.Value;
+                DbContext.Store.Update(product1);
+            }
+            
+            DbContext.Bills.Add(pb);
+            DbContext.SaveChanges();
             float z = 100;
             float tt = totalcost;
             float y = Convert.ToInt32(Discount);

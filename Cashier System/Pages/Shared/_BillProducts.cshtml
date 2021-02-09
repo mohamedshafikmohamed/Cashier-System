@@ -19,24 +19,92 @@
 
 @model IEnumerable<Cashier_System.Models.Product>
 <div id="container">
-    <ul class="employees">
+   
+    <div class="scrollbar" id="style-1">
+        <div class="table-div" style="display: table-caption; height: 150px; width: 19rem;">
+            <table>
+                <tr>
+                    <th>Product</th>
+                    <th>price</th>
+                    <th>amount</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>BMW</td>
+                    <td>500 L.E</td>
+                    <td><input type="number" class="heyy"></td>
+                    <td><span class="close">&times;</span></td>
+                </tr>
+                <tr>
+                    <td>BMW</td>
+                    <td>500 L.E</td>
+                    <td><input type="number" class="heyy"></td>
+                    <td><span class="close">&times;</span></td>
+                </tr>
+                <tr>
+                    <td>BMW</td>
+                    <td>500 L.E</td>
+                    <td><input type="number" class="heyy"></td>
+                    <td><span class="close">&times;</span></td>
+                </tr>
+                <tr>
+                    <td>BMW</td>
+                    <td>500 L.E</td>
+                    <td><input type="number" class="heyy"></td>
+                    <td><span class="close">&times;</span></td>
+                </tr>
+                <tr>
+                    <td>BMW</td>
+                    <td>500 L.E</td>
+                    <td><input type="text" class="heyy"></td>
+                    <td><span class="close">&times;</span></td>
+                </tr>
+                <tr>
+                    <td>BMW</td>
+                    <td>500 L.E</td>
+                    <td><input type="text" class="heyy"></td>
+                    <td><span class="close">&times;</span></td>
+                </tr>
+                <tr>
+                    <td>BMW</td>
+                    <td>500 L.E</td>
+                    <td><input type="text" class="heyy"></td>
+                    <td><span class="close">&times;</span></td>
+                </tr>
+                <tr>
+                    <td>BMW</td>
+                    <td>500 L.E</td>
+                    <td><input type="text" class="heyy"></td>
+                    <td><span class="close">&times;</span></td>
+                </tr>
+                <tr>
+                    <td>BMW</td>
+                    <td>500 L.E</td>
+                    <td><input type="text" class="heyy"></td>
+                    <td><span class="close">&times;</span></td>
+                </tr>
+                <tr>
+                    <td>BMW</td>
+                    <td>500 L.E</td>
+                    <td><input type="text" class="heyy"></td>
+                    <td><span class="close">&times;</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
-       
-        @foreach (var p in Model)
-        {
-            <li>
-                <img src="~/images/@p.photo" width="80" height="80" style="border-radius:20%; " /><br />
-                <i>@p.Name</i>
-                <i>@p.SellingPrice</i><br />
+    <form>
+        <div class="form-group">
+            <label for="exampleInputEmail1">TAXES</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="amount">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">DISCOUNT</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="amount">
+        </div>
 
-                <button class="btn btn-danger" onclick="d(@p.Id)">delete</button>
-            </li>
-           }
+        <button type="submit" class="btn btn-ehab btn-primary">Submit</button>
+    </form>
 
 
-
-
-        
-    </ul>
-    
 </div>

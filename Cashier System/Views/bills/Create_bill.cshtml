@@ -9,10 +9,130 @@
 @{
     Layout = "_Layout";
 }
+<style>
+    .card-deck {
+        width: 48%;
+        position: absolute;
+        top: 8%;
+        left: 40.5%;
+    }
+
+    button.nav-link.btn.btn-link.text-dark {
+        position: relative;
+        top: -30px;
+        left: 65.9rem;
+    }
+
+    .card-deck .card {
+        margin-left: 0px;
+        min-width: 200px;
+        margin: 10px;
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: 36%;
+    }
+
+    form {
+        display: inline-block;
+        position: absolute;
+        top: 65%;
+        right: 69%;
+    }
+
+    .card-footer {
+        text-align: center;
+        font-size: 0.6px;
+    }
+
+    .card-body {
+        padding: 5px 0px 0px 3px;
+        margin-bottom: -10px;
+    }
+
+    .btn-ehab {
+        padding: 7px 15px;
+        color: black;
+        letter-spacing: 1.8px;
+    }
+
+    .card-title {
+        margin-bottom: .0rem;
+        line-height: 1.3;
+    }
+
+    .price {
+        margin-right: 10px;
+        float: right;
+    }
+
+    .heyy {
+        width: 80%;
+    }
+
+    h5 {
+        font-size: 0.88rem;
+        font-weight: 400;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .table-div {
+        display: table-caption;
+        height: 150px;
+        width: 22rem;
+    }
+
+    td,
+    th {
+        border: 0.8px solid #dddddd;
+        text-align: left;
+        padding: 2px 15px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    .scrollbar {
+        margin-left: 0px;
+        float: left;
+        height: 309px;
+        width: auto;
+        background: #F5F5F5;
+        overflow-y: auto;
+        margin-bottom: 25px;
+        position: relative;
+        top: 11.5%;
+    }
+
+    #style-1::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        background-color: #F5F5F5;
+    }
+
+    #style-1::-webkit-scrollbar {
+        width: 12px;
+        background-color: #F5F5F5;
+    }
+
+    #style-1::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(13, 25, 94, 0.3);
+        background-color: #23689b;
+    }
+</style>
+
 <script src="~/js/AjaxMethods.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
+<link href="~/css/Create_Bills.css" rel="stylesheet" />
 <script>
     var x = 5;
 
@@ -60,41 +180,90 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
-
+@*
     @{ if (SignInManager.IsSignedIn(User))
         {
-        <button class="b">load partialview</button>
-    <div class="container" id="div1">
+            <button class="b">load partialview</button>
+            <div class="container" id="div1">
 
-    </div>
-    <div id="container">
-        <ul class="employees">
+            </div>
+            <div id="container">
+                <ul class="employees">
 
 
 
-            @foreach (var p in Model.AllProduct)
+                    @foreach (var p in Model.AllProduct)
+                    {
+                        <li>
+                            <img src="~/images/@p.photo" width="80" height="80" style="border-radius:20%; " /><br />
+                            <i>@p.Name</i>
+                            <i>@p.SellingPrice</i><br />
+                            <button class="btn btn-success" onclick="a(@p.Id)">add</button>
+
+
+                        </li>
+
+                    }
+                </ul>
+                <form asp-action="Create_bill" method="post">
+
+                    <label>Add Discount</label><input name="Discount" value="0" />
+                    <label>Add Taxes</label><input name="Taxes" value="0" />
+                    <input type="submit" value="CheckOut" />
+                </form>
+            </div>
+            if (ViewBag.QuantityError != null)
             {
-                <li>
-                    <img src="~/images/@p.photo" width="80" height="80" style="border-radius:20%; " /><br />
-                    <i>@p.Name</i>
-                    <i>@p.SellingPrice</i><br />
-                    <button class="btn btn-success" onclick="a(@p.Id)">add</button>
-
-
-                </li>
-
+                <h1 style="color:red">@ViewBag.QuantityError</h1>
             }
-        </ul>
-        <form asp-action="Create_bill" method="post">
+        }
 
-            <label>Add Discount</label><input name="Discount" value="0" />
-            <label>Add Taxes</label><input name="Taxes" value="0" />
-            <input type="submit" value="CheckOut" />
-        </form>
-    </div>
-                }
-            
-    else{
+        else
+        {
 
-<h1>YOU MUST LOGIN FIRST</h1>
+            <h1>YOU MUST LOGIN FIRST</h1>
         } }
+*@
+
+<div class="card-deck row">
+    @foreach (var p in Model.AllProduct)
+    {
+        <div class="card col-md">
+
+            <img class="card-img-top" src="~/images/@p.photo" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">BMW <br>500</h5>
+
+            </div>
+            <div class="card-footer">
+                <button class="b btn btn-ehab btn-md btn-outline-primary">ADD</button>
+            </div>
+            <br />
+
+        </div>
+
+    }
+</div>
+
+<div class="container" id="div1">
+
+</div>
+
+
+<script>
+    // var selectedItem = document.querySelectorAll('.btn');
+    // selectedItem.addEventListener('click', function(ev) {
+
+    //     console.log(ev.type, ev.target);
+
+    // });
+
+    var closebtns = document.getElementsByClassName("close");
+
+
+    for (i = 0; i < closebtns.length; i++) {
+        closebtns[i].addEventListener("click", function () {
+            this.parentElement.parentElement.style.display = 'none';
+        });
+    }
+</script>
