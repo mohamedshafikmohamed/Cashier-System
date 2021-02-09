@@ -290,7 +290,7 @@ namespace Cashier_System.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> Addproducttobill(string code)
+        public async Task<IActionResult> Addproducttobill(string code)
         {
             ProductBills p = new ProductBills();
             p.ProductCode =Convert.ToInt32( code);
@@ -331,7 +331,7 @@ namespace Cashier_System.Controllers
             GetPartial();
             return Json(p);
         }
-        public IActionResult GetPartial()
+        public PartialViewResult GetPartial()
         {
           
             var b = DbContext.ProductBills.Where(x => x.UserId == _UserManager.GetUserId(HttpContext.User)&&x.code=="").ToList();

@@ -1,107 +1,74 @@
 ﻿<script>
+    function reload() {
+        var table = $('#div1').reload();
 
+    };
     function d(x) {
-       
+
         $.ajax(
             {
                 type: "POST",
                 url: "/bills/Deleteproductfrombill",
                 data: { id: x },
                 datatype: "json",
-
+                success: function (result) {
+                   
+                    $("#div1").load("/bills/GetPartial");
+                }
             }
-
+            
         )
-        $("#div1").load("/Bills/GetPartial");
+      
+
     };
 
 </script>
-
+@{ 
+    float total = 0;
+}
 @model IEnumerable<Cashier_System.Models.Product>
 <div id="container">
-   
+
     <div class="scrollbar" id="style-1">
         <div class="table-div" style="display: table-caption; height: 150px; width: 19rem;">
             <table>
                 <tr>
                     <th>Product</th>
                     <th>price</th>
-                    <th>amount</th>
                     <th></th>
+
                 </tr>
-                <tr>
-                    <td>BMW</td>
-                    <td>500 L.E</td>
-                    <td><input type="number" class="heyy"></td>
-                    <td><span class="close">&times;</span></td>
-                </tr>
-                <tr>
-                    <td>BMW</td>
-                    <td>500 L.E</td>
-                    <td><input type="number" class="heyy"></td>
-                    <td><span class="close">&times;</span></td>
-                </tr>
-                <tr>
-                    <td>BMW</td>
-                    <td>500 L.E</td>
-                    <td><input type="number" class="heyy"></td>
-                    <td><span class="close">&times;</span></td>
-                </tr>
-                <tr>
-                    <td>BMW</td>
-                    <td>500 L.E</td>
-                    <td><input type="number" class="heyy"></td>
-                    <td><span class="close">&times;</span></td>
-                </tr>
-                <tr>
-                    <td>BMW</td>
-                    <td>500 L.E</td>
-                    <td><input type="text" class="heyy"></td>
-                    <td><span class="close">&times;</span></td>
-                </tr>
-                <tr>
-                    <td>BMW</td>
-                    <td>500 L.E</td>
-                    <td><input type="text" class="heyy"></td>
-                    <td><span class="close">&times;</span></td>
-                </tr>
-                <tr>
-                    <td>BMW</td>
-                    <td>500 L.E</td>
-                    <td><input type="text" class="heyy"></td>
-                    <td><span class="close">&times;</span></td>
-                </tr>
-                <tr>
-                    <td>BMW</td>
-                    <td>500 L.E</td>
-                    <td><input type="text" class="heyy"></td>
-                    <td><span class="close">&times;</span></td>
-                </tr>
-                <tr>
-                    <td>BMW</td>
-                    <td>500 L.E</td>
-                    <td><input type="text" class="heyy"></td>
-                    <td><span class="close">&times;</span></td>
-                </tr>
-                <tr>
-                    <td>BMW</td>
-                    <td>500 L.E</td>
-                    <td><input type="text" class="heyy"></td>
-                    <td><span class="close">&times;</span></td>
-                </tr>
+
+                @foreach (var item in Model)
+                {
+                    total += item.SellingPrice;
+                    <tr>
+                        <td>
+                            @item.Name
+                        <td>
+                            @item.PurchasingPrice
+                        </td>
+                        <td>
+                            <button onclick="d(@item.Id)" class="b btn btn-ehab btn-md btn-outline-primary">Delete</button>
+
+                        </td>
+                    </tr>
+                }
+
             </table>
         </div>
     </div>
 
-    <form>
+    <form asp-action="Create_bill" asp-controller="Bills" method="post">
         <div class="form-group">
             <label for="exampleInputEmail1">TAXES</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="amount">
+            <input type="number" name="Taxes" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="0">
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">DISCOUNT</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="amount">
+            <input type="number"  name="Discount" class="form-control" id="exampleInputPassword1" placeholder="0">
         </div>
+        <h2>Total : @total</h2>
 
         <button type="submit" class="btn btn-ehab btn-primary">Submit</button>
     </form>

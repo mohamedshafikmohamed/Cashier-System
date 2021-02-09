@@ -11,17 +11,3 @@
     )
 
 };
-
-function a(x) {
-    $.ajax(
-        {
-            type: "POST",
-            url: "/bills/Addproducttobill",
-            data: { code: x },
-            datatype: "json",
-
-        }
-
-    )
-    $("#div1").load("/Bills/GetPartial");
-};

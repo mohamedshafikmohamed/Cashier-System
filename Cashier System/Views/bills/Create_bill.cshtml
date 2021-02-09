@@ -137,14 +137,26 @@
     var x = 5;
 
 
+    function a(x) {
+        $.ajax(
+            {
+                type: "POST",
+                url: "/bills/Addproducttobill",
+                data: { code: x },
+                datatype: "json",
+                success: function (result) {
+                   
 
-    $(document).ready(function () {
+                    $("#div1").load("/bills/GetPartial");
+                }
+            }
 
-        $(".b").click(function refresh() {
-            $("#div1").load("/Bills/GetPartial");
-        });
+        )
 
-    });
+
+    };
+
+    
 </script>
 <style>
     #container {
@@ -232,11 +244,11 @@
 
             <img class="card-img-top" src="~/images/@p.photo" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title">BMW <br>500</h5>
+                <h5 class="card-title">@p.Name <br>@p.SellingPrice L.E</h5>
 
             </div>
             <div class="card-footer">
-                <button class="b btn btn-ehab btn-md btn-outline-primary">ADD</button>
+                <button onclick="a(@p.Id)" class="b btn btn-ehab btn-md btn-outline-primary">ADD</button>
             </div>
             <br />
 
@@ -246,7 +258,7 @@
 </div>
 
 <div class="container" id="div1">
-
+ 
 </div>
 
 
