@@ -13,6 +13,7 @@ namespace Cashier_System.Controllers
     {
         public ApplicationDbContext DbContext;
         RoleManager<IdentityRole> rolemanager;
+       // SignInManager<IdentityRole> SignInManager;
         private readonly UserManager<IdentityUser> _UserManager;
 
         public AdminController(RoleManager<IdentityRole> _rolemanager, ApplicationDbContext _DbContext, UserManager<IdentityUser> Usermanager)
@@ -20,7 +21,8 @@ namespace Cashier_System.Controllers
             rolemanager = _rolemanager;
             _UserManager = Usermanager;
             DbContext = _DbContext;
-        }
+           // SignInManager = _SignInManager;
+    }
       
         [HttpGet]
         public ActionResult Accountants()
@@ -46,6 +48,34 @@ namespace Cashier_System.Controllers
             DbContext.SaveChanges();
             string x="fdf";
             return Json(x);
+        }
+
+        [HttpGet]
+        public ActionResult EditCashier(string id)
+        {
+            EditPasswordViewModel model = new EditPasswordViewModel();
+            
+            //_UserManager.ChangePasswordAsync();
+
+            var user = DbContext.Users.Find(id);
+            model.Email = user.Email;
+            model.Id = id;
+            
+            return View(model);
+        } [HttpPost]
+        public async Task<ActionResult> EditCashier(EditPasswordViewModel model)
+        {
+           // var user = DbContext.Users.Find(model.Id);
+         /* await  _UserManager.ChangePasswordAsync(user,model.OldPassword,model.NewPassword);
+
+            var u = await _UserManager.GetUserAsync(HttpContext.User);
+            await SignInManager.RefreshSignInAsync(u);*/
+            var user = await _UserManager.FindByIdAsync(model.Id);
+
+            var token = await _UserManager.GeneratePasswordResetTokenAsync(user);
+            
+            var result = await _UserManager.ResetPasswordAsync(user, token, model.NewPassword);
+            return RedirectToAction("Accountants");
         }
     }
 }

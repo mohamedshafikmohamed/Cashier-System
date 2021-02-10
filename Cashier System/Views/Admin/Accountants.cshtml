@@ -21,33 +21,45 @@
             }
 
         )
-        
+
     };
 
 
 </script>
+<table class="table" style="margin-bottom:100px;">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
 
-@foreach (var item in Model)
-{
+            
+         
+         
 
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PasswordHash)
-        </td>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
 
-        <td>
-            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                
 
-            <button class="btn btn-success" onclick="delete_account('@item.Id')">add</button>
-        </td>
-    </tr>
-}
+                <td>
+                    <a asp-action="EditCashier" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+
+                    <a href="" onclick="delete_account('@item.Id')">Delete</a>
+                </td>
+            </tr>
+        }
 
 
+    </tbody>
+
+    </table>

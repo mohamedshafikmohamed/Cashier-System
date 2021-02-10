@@ -34,7 +34,8 @@ namespace Cashier_System
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc();
             services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
-              .AddEntityFrameworkStores<ApplicationDbContext>();
+              .AddEntityFrameworkStores<ApplicationDbContext>()
+               .AddDefaultTokenProviders();
             services.AddControllersWithViews();
 
             services.AddTransient<IEmailSender, EmailSender>();

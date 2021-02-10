@@ -186,6 +186,8 @@ namespace Cashier_System.Controllers
                 else { m[name] = 1; l.Add((int)product.Id); }
 
             }
+           
+            
             int i = -1;
             foreach(var x in m)
             {
