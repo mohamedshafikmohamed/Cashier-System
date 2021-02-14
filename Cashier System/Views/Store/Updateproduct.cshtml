@@ -1,0 +1,69 @@
+﻿@model Cashier_System.Models.Productviewmodel
+
+@using Microsoft.AspNetCore.Identity
+@using Cashier_System
+@using Cashier_System.Data
+@namespace Cashier_System.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = "_Layout";
+}
+
+<h1>Updateproduct</h1>
+
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Updateproduct" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantity" class="control-label"></label>
+                <input asp-for="Quantity" class="form-control" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PurchasingPrice" class="control-label"></label>
+                <input asp-for="PurchasingPrice" class="form-control" />
+                <span asp-validation-for="PurchasingPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SellingPrice" class="control-label"></label>
+                <input asp-for="SellingPrice" class="form-control" />
+                <span asp-validation-for="SellingPrice" class="text-danger"></span>
+            </div>
+
+            <input asp-for="img" type="hidden" class="form-control" />
+
+            <div class="form-group">
+                <label asp-for="photo" class="control-label"></label>
+                <input type="file" asp-for="photo" class="form-control" />
+                <span asp-validation-for="photo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="img" class="control-label"></label>
+                <img src="~/images/@Model.img" width="80" height="80" />
+                <span asp-validation-for="SellingPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

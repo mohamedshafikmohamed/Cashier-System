@@ -1,5 +1,5 @@
 ﻿using Cashier_System.Data;
-using DevExtreme.AspNet.Data;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -12,16 +12,17 @@ using System.Xml.Linq;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
-using DevExtreme.AspNet.Mvc;
+
 using Cashier_System.Models;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Cors;
 
+
 namespace Cashier_System.Controllers
 {
-    [Route("api/[controller]/[action]")]
+   
     public class StoreController : Controller
     {
         public ApplicationDbContext DbContext;
@@ -33,60 +34,98 @@ namespace Cashier_System.Controllers
             Ihosting = _Ihosting;
            
         }
-        [HttpGet]
-        public Object Get(DataSourceLoadOptions loadOptions)
+
+        public IActionResult Create()
         {
-            return DataSourceLoader.Load(DbContext.Store, loadOptions);
-         
+            return View();
         }
-           [HttpPost]
+            [HttpPost]
         
-        public IActionResult Post(string values,IFormFile Photo)
+        public IActionResult Create(Productviewmodel model)
         {
             
             var product = new Product();
-            JsonConvert.PopulateObject(values, product);
-            var myFile = Request.Form.Files["Photo"];
-            product.Gain = (product.SellingPrice - product.PurchasingPrice) * product.Quantity;
+            
+            product.Gain = (model.SellingPrice - model.PurchasingPrice) * model.Quantity;
             product.Id = null;
+            product.PurchasingPrice = model.PurchasingPrice;
+            product.Quantity = model.Quantity;
+            product.SellingPrice = model.SellingPrice;
+            product.Name = model.Name;
+
             DbContext.Store.Add(product);
             DbContext.SaveChanges();
-
-            return Ok();
+            
+            Upload_photo(model.photo, (int)product.Id);
+            product.photo = product.Id.ToString() + model.photo.FileName;
+            DbContext.Store.Update(product);
+            DbContext.SaveChanges();
+            return RedirectToAction("Index");
            
          
         }
-         [HttpPut]
-         public IActionResult Updateproduct(int key, string values)
-          {
-             var order = DbContext.Store.First(o => o.Id == key);
-            JsonConvert.PopulateObject(values, order);
-
-
-
-              DbContext.SaveChanges();
-
-              return Ok(order);
-          }
-        public void Delete(int key)
+        public IActionResult Updateproduct(int Id)
         {
-            var p = DbContext.Store.First(a => a.Id == key);
+            var product=DbContext.Store.Find(Id);
+            Productviewmodel model = new Productviewmodel();
+            model.Id = (int)product.Id;
+            model.SellingPrice = product.SellingPrice;
+            model.PurchasingPrice = product.PurchasingPrice;
+            model.Name = product.Name;
+            model.Quantity = product.Quantity;
+
+            model.img = product.photo;
+
+            return View(model);
+        }
+            [HttpPost]
+         public IActionResult Updateproduct(Productviewmodel model)
+          {
+            var product = new Product();
+
+            product.Gain = (model.SellingPrice - model.PurchasingPrice) * model.Quantity;
+            product.Id = model.Id;
+            product.PurchasingPrice = model.PurchasingPrice;
+            product.Quantity = model.Quantity;
+            product.SellingPrice = model.SellingPrice;
+            product.Name = model.Name;
+            if (model.photo != null)
+            { Upload_photo(model.photo, (int)product.Id);
+                product.photo = product.Id.ToString() + model.photo.ContentType;
+            }
+            else
+            {
+                product.photo = model.img;
+            }
+            DbContext.Store.Update(product);
+            DbContext.SaveChanges();
+
+              return RedirectToAction("Index");
+        }
+        public JsonResult Delete(int Id)
+        {
+            var p = DbContext.Store.First(a => a.Id == Id);
             DbContext.Store.Remove(p);
             DbContext.SaveChanges();
+            return Json(p);
         }
-        [HttpPost]
+        [HttpGet]
         public IActionResult Index()
         {
 
-            return Ok();
+            return View(DbContext.Store.ToList());
         }
 
-        public void Upload_photo(IFormFile photo,string code)
+        public void Upload_photo(IFormFile photo,int code)
         {
             string p = Path.Combine(Ihosting.WebRootPath, "images");
-            string p2 = Path.Combine(p, photo.FileName+code);
+            
+            string p2 = Path.Combine(p, code.ToString()+ photo.FileName);
             photo.CopyTo(new FileStream(p2, FileMode.Create));
+          //  photo.Delete(Path.Combine(rootFolder, authorsFile));
 
         }
+
         }
-    }
+
+}

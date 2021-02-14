@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Cashier_System.Models
 {
-    public class Productviewmode
+    public class Productviewmodel
     {
         [Display(Name = "كود المنتج ")]
 
@@ -26,5 +26,6 @@ namespace Cashier_System.Models
         public float SellingPrice { get; set; }
         public float Gain { get; set; }
         public char IsDeleted { get; set; }
+        public string img { get; set; }
     }
 }

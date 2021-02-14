@@ -1,0 +1,125 @@
+﻿@model IEnumerable<Cashier_System.Models.Product>
+
+@using Microsoft.AspNetCore.Identity
+@using Cashier_System
+@using Cashier_System.Data
+@namespace Cashier_System.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = "_Layout";
+}
+<link href="~/fonts/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+<script>
+    var ID;
+    function getid(id) {
+
+        ID = id;
+    }
+
+    function Delete_Product() {
+        $.ajax(
+            {
+                type: "POST",
+                url: "/Store/Delete",
+                data: { Id: ID },
+                datatype: "json",
+                success: function (result) {
+
+                    $("#confirm-delete").modal().hide();
+                    $("#" + ID).remove();
+
+                }
+            }
+
+        )
+
+
+    };
+
+</script>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.photo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PurchasingPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SellingPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gain)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            <tr id="@item.Id">
+                <td>
+                    <img style="border-radius:20px;" src="~/images/@item.photo" width="80" height="80" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PurchasingPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SellingPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gain)
+                </td>
+
+                <td>
+                    <a style="" asp-action="Updateproduct"  class="fas fa-edit" asp-route-id="@item.Id">Edit</a> |
+
+                    <a class="btn btn-warning" onclick="getid(@item.Id)" href="#" data-href="delete.php?id=23" data-toggle="modal" data-target="#confirm-delete">Delete </a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Delete Product
+            </div>
+            <div class="modal-body">
+                Are You Sure for Deleting this Product ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger btn-ok" onclick="Delete_Product()" data-dismiss="model">Confirm Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<br />

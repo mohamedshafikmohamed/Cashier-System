@@ -90,13 +90,19 @@ namespace Cashier_System.Controllers
 
         public ActionResult Create_bill()
         {
-           
-            CreateBillViewModel model=new CreateBillViewModel();
-          
-            model.AllProduct = DbContext.Store.ToList();
-            model.BillsProduct = s();
-            GetPartial();
-            return View(model);
+            if (User.Identity.IsAuthenticated)
+            {
+                CreateBillViewModel model = new CreateBillViewModel();
+
+                model.AllProduct = DbContext.Store.ToList();
+                model.BillsProduct = s();
+                GetPartial();
+                return View(model);
+            }
+            else
+            {
+                return Redirect("/Identity/Account/Login");
+            }
         }
 
         
@@ -313,8 +319,8 @@ namespace Cashier_System.Controllers
             List<Product> pr = new List<Product>();
             foreach (var p in biilsproductObjects)
             {
-
-                pr.Add(DbContext.Store.Where(x => x.Id == p.ProductCode).ToList()[0]);
+                if (DbContext.Store.Where(x => x.Id == p.ProductCode).ToList().Count != 0)
+                { pr.Add(DbContext.Store.Where(x => x.Id == p.ProductCode).ToList()[0]); }
 
 
             }

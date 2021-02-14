@@ -11,9 +11,9 @@
 @using Cashier_System.Data
 @namespace Cashier_System.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@using DevExtreme.AspNet.Mvc
+
 <h1>bill</h1>
-@{int total = 0; } 
+@{int total = 0; }
 <table class="table">
     <thead>
         <tr>
@@ -21,10 +21,10 @@
                 اسم المنتج
             </th>
             <th>
-              الكمية
+                الكمية
             </th>
             <th>
-              السعر
+                السعر
             </th>
 
             <th></th>
@@ -42,9 +42,9 @@
                 </td>
                 <td>
                     @{
-                        total +=(int)Model.Total[item.Key];
+                        total += (int)Model.Total[item.Key];
                     }
-                   @Model.Total[item.Key]
+                    @Model.Total[item.Key]
                 </td>
 
 
@@ -52,7 +52,15 @@
         }
     </tbody>
 </table>
-<div>Total = @total </div>
+<div>
+    Total = @total
+    <br />
+    <br />
+
+    <a asp-action="Edit_Bill" asp-route-Bill_Id="@Model.bill.Id" class="btn btn-primary">Edit</a>
+    <br />
+    <hr />
+</div>
 <br />
 <div>
     <h4>Bills</h4>
@@ -93,8 +101,8 @@
 </div>
 <div>
 
-    <a asp-action="Edit_Bill" asp-route-Bill_Id="@Model.bill.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+
 
 </div>
 
