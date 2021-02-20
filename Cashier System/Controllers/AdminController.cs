@@ -1,5 +1,6 @@
 ﻿using Cashier_System.Data;
 using Cashier_System.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,10 +22,11 @@ namespace Cashier_System.Controllers
             rolemanager = _rolemanager;
             _UserManager = Usermanager;
             DbContext = _DbContext;
-           // SignInManager = _SignInManager;
+         
     }
-      
+        
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public ActionResult Accountants()
         {
             List<Users> u = new List<Users>();
@@ -35,7 +37,7 @@ namespace Cashier_System.Controllers
                 Users u1 = new Users();
                 u1.Email = z.Email;
                 u1.Id = z.Id;
-              //  u1.PasswordHash = z.PasswordHash;
+              
                 u.Add(u1);
 
             }
@@ -51,11 +53,12 @@ namespace Cashier_System.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public ActionResult EditCashier(string id)
         {
             EditPasswordViewModel model = new EditPasswordViewModel();
             
-            //_UserManager.ChangePasswordAsync();
+           
 
             var user = DbContext.Users.Find(id);
             model.Email = user.Email;
@@ -65,11 +68,8 @@ namespace Cashier_System.Controllers
         } [HttpPost]
         public async Task<ActionResult> EditCashier(EditPasswordViewModel model)
         {
-           // var user = DbContext.Users.Find(model.Id);
-         /* await  _UserManager.ChangePasswordAsync(user,model.OldPassword,model.NewPassword);
+         
 
-            var u = await _UserManager.GetUserAsync(HttpContext.User);
-            await SignInManager.RefreshSignInAsync(u);*/
             var user = await _UserManager.FindByIdAsync(model.Id);
 
             var token = await _UserManager.GeneratePasswordResetTokenAsync(user);

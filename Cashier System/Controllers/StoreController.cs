@@ -91,7 +91,7 @@ namespace Cashier_System.Controllers
             product.Name = model.Name;
             if (model.photo != null)
             { Upload_photo(model.photo, (int)product.Id);
-                product.photo = product.Id.ToString() + model.photo.ContentType;
+                product.photo = product.Id.ToString() + model.photo.FileName;
             }
             else
             {
