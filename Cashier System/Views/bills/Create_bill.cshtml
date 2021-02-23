@@ -4,6 +4,7 @@
 @using Cashier_System
 @using Cashier_System.Data
 @namespace Cashier_System.Pages
+    <link href="~/css/createBill.css" rel="stylesheet" />
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = "_Layout";
@@ -12,45 +13,73 @@
     .card-deck {
         width: 48%;
         position: absolute;
-        top: 8%;
-        left: 40.5%;
-    }
-
-    button.nav-link.btn.btn-link.text-dark {
-        position: relative;
-        top: -30px;
-        left: 65.9rem;
+        top: 12%;
+        left: 41.5%;
     }
 
     .card-deck .card {
-        margin-left: 0px;
-        min-width: 200px;
-        margin: 10px;
+            margin-right: 10px;
+            margin-bottom: 0px;
+            margin-left: 0px;
     }
 
-    .card-img-top {
-        width: 100%;
-        height: 36%;
-    }
+
+
+
+    /* .card-img-top {
+    width: 100%;
+    height: 36%;
+} */
 
     form {
         display: inline-block;
         position: absolute;
         top: 65%;
-        right: 69%;
+        right: 72%;
+    }
+
+
+    /* //////////////////// */
+
+    .card-footer {
+        text-align: left;
+        font-size: 0.7rem;
     }
 
     .card-footer {
-        text-align: center;
-        font-size: 0.6px;
+        padding: 0.2rem 0.3rem;
+        background-color: white;
+        border-top: none;
     }
+
+    .card-p {
+        margin-top: 8%;
+        margin-bottom: 8%;
+    }
+
+    .card-price {
+        position: absolute;
+        display: flex;
+        right: 1%;
+        padding: 2% 10%;
+        background-color: #4a47a3;
+        border-radius: 2px;
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: 66%;
+    }
+
+
+    /* //////////////////// */
 
     .card-body {
         padding: 5px 0px 0px 3px;
         margin-bottom: -10px;
     }
 
-    .btn-ehab {
+    .btn {
         padding: 7px 15px;
         color: black;
         letter-spacing: 1.8px;
@@ -99,7 +128,7 @@
     }
 
     .scrollbar {
-        margin-left: 0px;
+        margin-left: 20px;
         float: left;
         height: 309px;
         width: auto;
@@ -144,7 +173,7 @@
                 data: { code: x },
                 datatype: "json",
                 success: function (result) {
-                   
+
 
                     $("#div1").load("/bills/GetPartial");
                 }
@@ -155,7 +184,6 @@
 
     };
 
-    
 </script>
 <style>
     #container {
@@ -235,46 +263,45 @@
             <h1>YOU MUST LOGIN FIRST</h1>
         } }
 *@
-
 <div class="card-deck row">
     @foreach (var p in Model.AllProduct)
     {
-        <div class="card col-md">
+        <div class="col-lg-2 col-md-3 col-sm-6">
+            <div class="card">
 
-            <img class="card-img-top" src="~/images/@p.photo" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">@p.Name <br>@p.SellingPrice L.E</h5>
+                <h5 class="card-price">$500</h5>
+                <img class="card-img-top" src="~/images/6010cashierlogo.jpg" alt="Card image cap">
+                <!-- <div class="card-body">
+                    <h5 class="card-title">BMW <br>500</h5>
+
+                </div> -->
+                <div class="card-footer">
+                    <p class="card-p">Conference Chair (CONFIG) (Steel)</p>
+                </div>
 
             </div>
-            <div class="card-footer">
-                <button onclick="a(@p.Id)" class="b btn btn-ehab btn-md btn-outline-primary">ADD</button>
-            </div>
-            <br />
+        </div>
+    }
+</div>
+        <div class="container" id="div1">
 
         </div>
 
-    }
-</div>
 
-<div class="container" id="div1">
- 
-</div>
+        <script>
+            // var selectedItem = document.querySelectorAll('.btn');
+            // selectedItem.addEventListener('click', function(ev) {
 
+            //     console.log(ev.type, ev.target);
 
-<script>
-    // var selectedItem = document.querySelectorAll('.btn');
-    // selectedItem.addEventListener('click', function(ev) {
+            // });
 
-    //     console.log(ev.type, ev.target);
-
-    // });
-
-    var closebtns = document.getElementsByClassName("close");
+            var closebtns = document.getElementsByClassName("close");
 
 
-    for (i = 0; i < closebtns.length; i++) {
-        closebtns[i].addEventListener("click", function () {
-            this.parentElement.parentElement.style.display = 'none';
-        });
-    }
-</script>
+            for (i = 0; i < closebtns.length; i++) {
+                closebtns[i].addEventListener("click", function () {
+                    this.parentElement.parentElement.style.display = 'none';
+                });
+            }
+        </script>

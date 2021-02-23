@@ -57,9 +57,6 @@ namespace Cashier_System.Controllers
         public ActionResult EditCashier(string id)
         {
             EditPasswordViewModel model = new EditPasswordViewModel();
-            
-           
-
             var user = DbContext.Users.Find(id);
             model.Email = user.Email;
             model.Id = id;
@@ -68,8 +65,6 @@ namespace Cashier_System.Controllers
         } [HttpPost]
         public async Task<ActionResult> EditCashier(EditPasswordViewModel model)
         {
-         
-
             var user = await _UserManager.FindByIdAsync(model.Id);
 
             var token = await _UserManager.GeneratePasswordResetTokenAsync(user);

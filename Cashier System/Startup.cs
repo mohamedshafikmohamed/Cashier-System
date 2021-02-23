@@ -75,5 +75,8 @@ namespace Cashier_System
                 endpoints.MapRazorPages();
             });
         }
+
+        public void CreateRoles() { 
+        }
     }
 }

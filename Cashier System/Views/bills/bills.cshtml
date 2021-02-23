@@ -59,7 +59,7 @@
                 <td>
                     <a asp-action="Edit_bill" asp-route-Bill_Id="@item.Id">Edit</a> |
                     <a asp-action="bill" asp-route-Bill_Id="@item.Id">Details</a> |
-                    <button onclick="Delete_bill(@item.Id)">Delete</button>
+                    <button  class="btn btn-danger" onclick="Delete_bill(@item.Id)">Delete</button>
                 </td>
             </tr>
         }
